@@ -1,0 +1,300 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Dark industrial control panel theme — always dark */
+  --background: oklch(0.11 0.008 223);
+  --foreground: oklch(0.88 0.006 223);
+  --card: oklch(0.15 0.01 223);
+  --card-foreground: oklch(0.88 0.006 223);
+  --popover: oklch(0.15 0.01 223);
+  --popover-foreground: oklch(0.88 0.006 223);
+  --primary: oklch(0.72 0.19 145);
+  --primary-foreground: oklch(0.11 0.008 223);
+  --secondary: oklch(0.2 0.01 223);
+  --secondary-foreground: oklch(0.88 0.006 223);
+  --muted: oklch(0.18 0.01 223);
+  --muted-foreground: oklch(0.55 0.008 223);
+  --accent: oklch(0.72 0.19 145);
+  --accent-foreground: oklch(0.11 0.008 223);
+  --destructive: oklch(0.55 0.22 27);
+  --destructive-foreground: oklch(0.88 0 0);
+  --border: oklch(0.22 0.01 223);
+  --input: oklch(0.22 0.01 223);
+  --ring: oklch(0.72 0.19 145);
+  --radius: 0.5rem;
+  /* switch specific */
+  --switch-hue: 223;
+  --switch-green: 133;
+  --sidebar: oklch(0.15 0.01 223);
+  --sidebar-foreground: oklch(0.88 0.006 223);
+  --sidebar-primary: oklch(0.72 0.19 145);
+  --sidebar-primary-foreground: oklch(0.11 0.008 223);
+  --sidebar-accent: oklch(0.2 0.01 223);
+  --sidebar-accent-foreground: oklch(0.88 0.006 223);
+  --sidebar-border: oklch(0.22 0.01 223);
+  --sidebar-ring: oklch(0.72 0.19 145);
+}
+
+@theme inline {
+  --font-sans: 'Geist', 'Geist Fallback';
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ─── Rocker switch ─────────────────────────────────────────────────────── */
+:root {
+  --sw-hue: 223;
+  --sw-trans-dur: 0.3s;
+  --sw-trans-timing: cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+.switch-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.switch {
+  border-radius: 1.5em;
+  box-shadow: 0 0.125em 0.5em hsl(0 0% 0% / 0.6);
+  position: relative;
+  width: 4.5em;
+  height: 3em;
+  font-size: 2.5rem;
+  perspective: 10em;
+  display: block;
+}
+
+.switch > span {
+  display: block;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+.switch span {
+  display: block;
+}
+
+/* Animated parts */
+.switch__surface-glare,
+.switch__inner,
+.switch__inner-glare,
+.switch__rocker-sides,
+.switch__rocker-sides-glare,
+.switch__rocker,
+.switch__rocker-glare,
+.switch__light {
+  transition: transform var(--sw-trans-dur) var(--sw-trans-timing);
+}
+
+/* Surface */
+.switch__surface {
+  background-color: hsl(var(--sw-hue) 10% 22%);
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0; left: 0;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.switch__surface-glare {
+  background-image: radial-gradient(50% 50% at center, hsl(var(--sw-hue) 10% 45% / 1), hsl(var(--sw-hue) 10% 45% / 0));
+  width: 3em;
+  height: 3em;
+  transform: translate(0, 0.125em);
+}
+
+/* Hidden checkbox */
+.switch__input {
+  opacity: 0;
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* Inner recess */
+.switch__inner-shadow {
+  box-shadow: 0 0.125em 0.25em hsl(0 0% 0% / 0.4);
+  position: absolute;
+  inset: 0.5em;
+  z-index: 0;
+}
+
+.switch__inner {
+  background-color: hsl(var(--sw-hue) 10% 22%);
+  overflow: hidden;
+  position: absolute;
+  inset: 0.5em;
+  transform: translate(0.125em, 0);
+  z-index: 1;
+}
+
+.switch__inner-glare {
+  background-image: radial-gradient(50% 50% at center, hsl(var(--sw-hue) 10% 45% / 1), hsl(var(--sw-hue) 10% 45% / 0));
+  position: absolute;
+  width: 2em;
+  height: 2em;
+  transform: translate(100%, -0.5em);
+}
+
+/* Rocker shadow */
+.switch__rocker-shadow {
+  box-shadow: 0 0.125em 0.25em hsl(0 0% 0% / 0.5);
+  position: absolute;
+  top: 0.5625em;
+  right: 0.5625em;
+  bottom: 0.5625em;
+  left: 0.75em;
+  z-index: 2;
+}
+
+/* Rocker sides */
+.switch__rocker-sides {
+  background-color: hsl(var(--sw-hue) 10% 20%);
+  overflow: hidden;
+  position: absolute;
+  inset: 0.5em;
+  transform: rotateY(-20deg) translateZ(0.5em);
+  transform-style: preserve-3d;
+  z-index: 3;
+}
+
+.switch__rocker-sides-glare {
+  background-image: linear-gradient(90deg, hsl(var(--sw-hue) 10% 35% / 0), hsl(var(--sw-hue) 10% 35% / 1), hsl(var(--sw-hue) 10% 35% / 0));
+  position: absolute;
+  width: 200%;
+  height: 100%;
+}
+
+/* Rocker face */
+.switch__rocker {
+  background-color: hsl(var(--sw-hue) 10% 20%);
+  overflow: hidden;
+  position: absolute;
+  inset: 0.5625em;
+  transform: rotateY(-20deg) translateZ(0.5em);
+  transform-style: preserve-3d;
+  z-index: 4;
+}
+
+.switch__rocker-glare {
+  background-image: linear-gradient(120deg, hsl(var(--sw-hue) 10% 25% / 0) 25%, hsl(var(--sw-hue) 10% 25% / 1) 50%, hsl(var(--sw-hue) 10% 25% / 0) 75%);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-33%);
+}
+
+/* LED light */
+.switch__light {
+  background-image: linear-gradient(-45deg, hsl(var(--sw-hue) 10% 30%) 30%, hsl(var(--sw-hue) 10% 50%));
+  box-shadow: 0 0 max(1px, 0.05em) hsl(var(--sw-hue) 10% 10% / 0.3) inset;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.5em;
+  height: 0.5em;
+  transform: translate(-50%, -50%) rotateY(-20deg) translateX(1.125em) translateZ(0.51em);
+  z-index: 5;
+}
+
+.switch__light-inner {
+  background-color: hsl(133 90% 50%);
+  box-shadow:
+    0 0 max(1px, 0.05em) hsl(var(--sw-hue) 10% 10% / 0.3) inset,
+    0 0 0.25em hsl(133 90% 50%);
+  border-radius: 50%;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity var(--sw-trans-dur) var(--sw-trans-timing);
+}
+
+/* ── ON state (driven by .switch--on class via React) ── */
+.switch--on .switch__surface-glare {
+  transform: translate(3em, 0.125em);
+}
+.switch--on .switch__inner {
+  transform: translate(-0.125em, 0);
+}
+.switch--on .switch__inner .switch__inner-glare {
+  transform: translate(0, -0.5em);
+}
+.switch--on .switch__rocker {
+  transform: rotateY(20deg) translateZ(0.5em);
+}
+.switch--on .switch__rocker .switch__rocker-glare {
+  transform: translateX(33%);
+}
+.switch--on .switch__rocker-sides {
+  transform: rotateY(20deg) translateZ(0.5em);
+}
+.switch--on .switch__rocker-sides .switch__rocker-sides-glare {
+  transform: translateX(-50%);
+}
+.switch--on .switch__light {
+  transform: translate(-50%, -50%) rotateY(20deg) translateX(1.125em) translateZ(0.51em);
+}
+.switch--on .switch__light .switch__light-inner {
+  opacity: 1;
+}
+
+/* ─── Progress bar animation ────────────────────────────────────────────── */
+@keyframes progress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+.animate-progress {
+  animation: progress linear forwards;
+}
